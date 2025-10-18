@@ -72,4 +72,3 @@ Useful files
 
 ---
 
-If you want, I can add a basic test scaffold or convert the project to TypeScript next.
