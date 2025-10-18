@@ -9,23 +9,38 @@ function ProductPage() {
     const [categoryQuery, setCategoryQuery] = useState('');
     const { products, isLoading, error } = useSelector(state => state.products);
     const dispatch = useDispatch()
-
+    const [sortOrder, setSortOrder] = useState('');
 
     // const filteredProducts = products.filter(product =>
     //     product?.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     //     product?.tag.toLowerCase().includes(searchQuery.toLowerCase())
     // );
 
-    const filteredProducts = products.filter((product) => {
+    const filtered = products.filter((product) => {
         if (categoryQuery != '') {
             return product?.category.toLowerCase() == categoryQuery.toLowerCase();
         }
         return product;
     })
 
+    const sortedProducts = [...filtered].sort((a, b) => {
+        if (sortOrder === 'price_asc') {
+            return a.price - b.price;
+        } else if (sortOrder === 'price_desc') {
+            return b.price - a.price;
+        }
+        return 0;
+    });
+
+    const filteredProducts = sortedProducts;
+
 
     const handleCategoryChnage = (category) => {
         setCategoryQuery(category)
+    }
+
+    const handleSortChange = (order) => {
+        setSortOrder(order);
     }
 
 
@@ -74,7 +89,12 @@ function ProductPage() {
     return (
         <div className="app">
             <Header />
-            <FilterBar categoryQuery={categoryQuery} setCategoryQuery={handleCategoryChnage} />
+            <FilterBar
+                categoryQuery={categoryQuery}
+                setCategoryQuery={handleCategoryChnage}
+                sortOrder={sortOrder}
+                setSortOrder={handleSortChange}
+            />
             <main className="mainContent">
                 {renderContent()}
             </main>
