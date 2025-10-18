@@ -31,7 +31,6 @@ const ProductSlice = createSlice({
             let product = action.payload;
 
             let check_product_if_exist = favorite_list.find(p => p.id == product.id)
-            ('check product :', check_product_if_exist);
 
             if (check_product_if_exist) {
                 toast.info('This product is already in your Favorites list. No need to add it again!')
@@ -72,5 +71,5 @@ const ProductSlice = createSlice({
     }
 });
 
-export const { Add_to_Favorite, fetch_Favorite_list ,Remove_from_Favorite_list } = ProductSlice.actions
+export const { Add_to_Favorite, fetch_Favorite_list, Remove_from_Favorite_list } = ProductSlice.actions
 export default ProductSlice.reducer;
